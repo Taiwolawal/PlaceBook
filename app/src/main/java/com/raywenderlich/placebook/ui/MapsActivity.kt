@@ -1,4 +1,4 @@
-package com.raywenderlich.placebook
+package com.raywenderlich.placebook.ui
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -14,7 +14,6 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PointOfInterest
@@ -23,6 +22,7 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FetchPhotoRequest
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.PlacesClient
+import com.raywenderlich.placebook.R
 import com.raywenderlich.placebook.adapter.BookmarkInfoWindowAdapter
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -135,7 +135,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }.addOnFailureListener { exception ->
             if (exception is ApiException) {
                 val statusCode = exception.statusCode
-                Log.e(TAG,
+                Log.e(
+                    TAG,
                     "Place not found: " + exception.message + ", " + "statusCode: " + statusCode
                 )
             }
@@ -158,7 +159,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .addOnFailureListener { exception ->
                 if (exception is ApiException) {
                     val statusCode = exception.statusCode
-                    Log.e(TAG, "Place not found: "
+                    Log.e(
+                        TAG, "Place not found: "
                             + exception.message + ", " + "statusCode: " + statusCode)
                 }
             }
