@@ -9,9 +9,10 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import com.raywenderlich.placebook.R
 import com.raywenderlich.placebook.ui.MapsActivity
+import com.raywenderlich.placebook.viewmodel.MapsViewModel
 
 // 1
-class BookmarkInfoWindowAdapter(context: Activity) : GoogleMap.InfoWindowAdapter {
+class BookmarkInfoWindowAdapter(val context: Activity) : GoogleMap.InfoWindowAdapter {
     // 2
     private val contents: View
     // 3
@@ -29,10 +30,20 @@ class BookmarkInfoWindowAdapter(context: Activity) : GoogleMap.InfoWindowAdapter
     override fun getInfoContents(marker: Marker): View? {
         val titleView = contents.findViewById<TextView>(R.id.title)
         titleView.text = marker.title ?: ""
+
         val phoneView = contents.findViewById<TextView>(R.id.phone)
         phoneView.text = marker.snippet ?: ""
+
         val imageView = contents.findViewById<ImageView>(R.id.photo)
-        imageView.setImageBitmap((marker.tag as MapsActivity.PlaceInfo).image)
+        when (marker.tag) {
+            is MapsActivity.PlaceInfo -> {
+                imageView.setImageBitmap((marker.tag as MapsActivity.PlaceInfo).image)
+            }
+            is MapsViewModel.BookmarkMarkerView -> {
+                var bookMarkview = marker.tag as MapsViewModel.BookmarkMarkerView
+                imageView.setImageBitmap(bookMarkview.getImage(context))
+            }
+        }
         return contents
     }
 }
